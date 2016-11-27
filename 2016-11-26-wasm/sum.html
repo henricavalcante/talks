@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Hello WebAssembly World</title>
+  </head>
+  <body>
+    <h1>Hello WebAssembly World</h1>
+    <script type="text/javascript">
+async function myInstance() {
+  const binary = await fetch('sum.wasm');
+  const bytes = await binary.arrayBuffer();
+  const module = await WebAssembly.compile(bytes);
+  const instance = await new WebAssembly.Instance(module);
+  return instance
+}
+
+myInstance().then((module) => {
+  const sum = module.exports.sum;
+  console.log(sum);
+  console.log(sum(1,2));
+});
+    </script>
+  </body>
+</html>
